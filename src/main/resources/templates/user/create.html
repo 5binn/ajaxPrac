@@ -1,0 +1,62 @@
+<html layout:decorate="~{layout}">
+<div layout:fragment="content" class="container my-3">
+    <div style="display:flex; height: 500px; align-items: center; justify-content:center;">
+
+        <div>
+            <div class="mb-3">
+                <label for="username" class="form-label">ID</label>
+                <input type="text" class="form-control" id="username" name="username">
+            </div>
+            <div class="mb-3">
+                <label for="pw1" class="form-label">PW</label>
+                <input type="password" class="form-control" id="pw1" name="password1">
+            </div>
+            <div class="mb-3">
+                <label for="pw2" class="form-label">PW 확인</label>
+                <input type="password" class="form-control" id="pw2" name="password2">
+            </div>
+            <div style="display:flex; justify-content:space-between;">
+                <button class="btn btn-primary mt-3" onclick="createUser()">sign up</button>
+                <a type="button" class="btn btn-secondary mt-3" href="/">cancel</a>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        function createUser() {
+            var username = $("input[name='username']").val();
+            var pw1 = $("input[name='password1']").val();
+            var pw2 = $("input[name='password2']").val();
+
+            if (!username || !pw1 || !pw2) {
+            alert("모든 필드를 채워주세요.");
+            return;
+            }
+            if (pw1 !== pw2) {
+            alert("비밀번호가 일치하지 않습니다.");
+            return;
+            }
+            var requestData = {
+            username: username,
+            password: pw1
+            };
+
+            $.ajax({
+                url: "/user/create",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(requestData),
+                success: function (response) {
+                    console.log(response);
+                    window.location.href = "/";
+                },
+                error: function (err) {
+                    console.error(err);
+                }
+            })
+        }
+    </script>
+</div>
+
+
+</html>
