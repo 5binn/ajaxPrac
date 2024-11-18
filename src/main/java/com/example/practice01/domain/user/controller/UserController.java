@@ -2,6 +2,7 @@ package com.example.practice01.domain.user.controller;
 
 import com.example.practice01.domain.user.request.UserRequest;
 import com.example.practice01.domain.user.service.UserService;
+import com.example.practice01.global.request.Rq;
 import com.example.practice01.global.rsData.ResultCode;
 import com.example.practice01.global.rsData.ResultData;
 import jakarta.validation.Valid;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/user")
 public class UserController {
     private final UserService userService;
+    private final Rq rq;
 
     @GetMapping("/create")
     public String create() {
@@ -32,5 +34,14 @@ public class UserController {
         }
         ResultData resultData = this.userService.create(createRq.getUsername(), createRq.getPassword());
         return ResultData.of(resultData.getResultCode(), resultData.getMsg());
+    }
+
+    @GetMapping("/login")
+    public String login() {
+        if (rq.isLogin()) {
+            return "redirect:/article/list";
+        } else {
+            return "user/login";
+        }
     }
 }

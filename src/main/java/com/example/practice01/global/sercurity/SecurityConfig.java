@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -21,15 +22,19 @@ public class SecurityConfig {
                 .csrf((csrf) -> csrf
                         .disable()
                 )
+                .headers((headers) -> headers
+                        .addHeaderWriter(new XFrameOptionsHeaderWriter(
+                                XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN)))
                 .formLogin((formLogin) -> formLogin
-                        .loginPage("/")
-                        .loginProcessingUrl("/user/login")
-                        .defaultSuccessUrl("/", true)
+                        .loginPage("/user/login")
+                        .defaultSuccessUrl("/")
+                        .failureUrl("/user/login?error=true")
                 )
                 .logout((logout)-> logout
-                        .logoutUrl("/logout")
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")
+                        .logoutSuccessUrl("/")
                 );
         return http.build();
     }

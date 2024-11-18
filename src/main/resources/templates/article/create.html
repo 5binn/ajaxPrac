@@ -1,10 +1,58 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html layout:decorate="~{layout}">
+<div layout:fragment="content" class="container my-3">
+    <div style="display:flex; height: 500px; align-items: center; justify-content:center;">
 
-</body>
+        <div>
+            <div class="mb-3">
+                <label for="title" class="form-label">제목</label>
+                <input type="text" class="form-control" id="title" name="title">
+            </div>
+            <div class="mb-3">
+                <label for="content" class="form-label">내용</label>
+                <textarea  class="form-control" id="content" name="content"></textarea>
+            </div>
+            <div style="display:flex; justify-content:space-between;">
+                <button class="btn btn-primary mt-3" onclick="createUser()">sign up</button>
+                <a type="button" class="btn btn-secondary mt-3" href="/">cancel</a>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        function createUser() {
+            var username = $("input[name='username']").val();
+            var pw1 = $("input[name='password1']").val();
+            var pw2 = $("input[name='password2']").val();
+
+            if (!username || !pw1 || !pw2) {
+            alert("모든 필드를 채워주세요.");
+            return;
+            }
+            if (pw1 !== pw2) {
+            alert("비밀번호가 일치하지 않습니다.");
+            return;
+            }
+            var requestData = {
+            username: username,
+            password: pw1
+            };
+
+            $.ajax({
+                url: "/user/create",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(requestData),
+                success: function (response) {
+                    console.log(response);
+<!--                    window.location.href = "/";-->
+                },
+                error: function (err) {
+                    console.error(err);
+                }
+            })
+        }
+    </script>
+</div>
+
+
 </html>
