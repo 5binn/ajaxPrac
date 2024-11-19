@@ -18,15 +18,15 @@
             crossorigin="anonymous"></script>
     <title>인사관리시스템</title>
 </head>
-<body>
+<body style="background-color: #f0f0f0;">
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="py-2 px-3" style="display: flex; width:100%; justify-content: space-between;">
         <div style="font-weight: bold;">
             <a style="font-size: xx-large;"  class="navbar-brand" th:href="@{/}">인사관리시스템</a>
         </div>
         <div class="px-2 pt-2" th:if="${@rq.isLogin()}">
-            <a style="font-size: large;"  th:href="@{/article/create}">글 작성</a>
-            <a style="font-size: large;"  class="pl-4" th:href="@{/user/logout}">로그아웃</a>
+            <a style="font-size: large;" th:href="@{/article/create}">글 작성</a>
+            <a style="font-size: large;" class="pl-4" th:href="@{/user/logout}">로그아웃</a>
         </div>
     </div>
 </nav>

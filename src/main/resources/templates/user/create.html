@@ -48,7 +48,11 @@
                 data: JSON.stringify(requestData),
                 success: function (response) {
                     console.log(response);
-<!--                    window.location.href = "/";-->
+                    if(response.success) {
+                        window.location.href = "/";
+                    } else {
+                        alert(response.msg);
+                    }
                 },
                 error: function (err) {
                     console.error(err);

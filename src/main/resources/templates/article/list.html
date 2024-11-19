@@ -1,22 +1,27 @@
 <html layout:decorate="~{layout}">
 <div layout:fragment="content" class="container my-3">
-    <div style="display:flex; height: 500px; align-items: center; justify-content:center;">
-
-        <table id="articleList" class="table">
-            <thead>
-            <tr>
+    <div >
+        <table id="articleList" class="table table-dark table-hover" style="border-radius: 5px; border: 6px solid gray;">
+            <thead style="border: darkgray; text-align: center; border-radius: 3px;">
+            <tr style="font-size: 13px;">
                 <th scope="col">번호</th>
                 <th scope="col">제목</th>
                 <th scope="col">작성자</th>
                 <th scope="col">작성일</th>
             </tr>
             </thead>
-            <tbody>
-            <tr th:each="article, loop : ${articleList}">
-                <th scope="row">[[${article.id}]]</th>
-                <td>[[${article.title}]]</td>
-                <td>[[${article.author.username}]]</td>
-                <td>@[[${article.createDate}]]</td>
+            <tbody style="text-align: center">
+            <tr th:each="article, loop : ${articleList}" >
+                <th style="width: 6%" scope="row" th:text="${article.id}"></th>
+                <td style="width: 40%">[[${article.title}]]</td>
+                <td style="width: 12%">[[${article.author}]]</td>
+                <td style="width: 12%">
+                    <span th:id="|result${loop.index + 1}|"></span>
+                </td>
+                <script th:src="@{/calculateDate.js}"></script>
+                <script th:inline="javascript">
+                    calculateDate([[${article.createDate}]], 'result' + [[${loop.index + 1}]]);
+                </script>
             </tr>
             </tbody>
         </table>

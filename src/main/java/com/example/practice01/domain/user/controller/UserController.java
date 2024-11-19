@@ -10,30 +10,18 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @Controller
 @RequestMapping("/user")
 public class UserController {
-    private final UserService userService;
+
     private final Rq rq;
 
     @GetMapping("/create")
     public String create() {
         return "user/create";
-    }
-
-    @PostMapping("/create")
-    public ResultData create(@Valid @RequestBody UserRequest.create createRq, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return ResultData.of(ResultCode.F_06, "검증오류");
-        }
-        ResultData resultData = this.userService.create(createRq.getUsername(), createRq.getPassword());
-        return ResultData.of(resultData.getResultCode(), resultData.getMsg());
     }
 
     @GetMapping("/login")

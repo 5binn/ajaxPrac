@@ -2,6 +2,7 @@ package com.example.practice01.domain.user.entity;
 
 import com.example.practice01.domain.article.entity.Article;
 import com.example.practice01.global.jpa.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
@@ -19,7 +20,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SiteUser extends BaseEntity {
+
     private String username;
+
+    @JsonIgnore
     private String password;
 
     @OneToMany(mappedBy = "author")

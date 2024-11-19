@@ -5,21 +5,19 @@ import com.example.practice01.global.request.Rq;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequiredArgsConstructor
-public class MainController {
+public class HomeController {
 
     private final Rq rq;
 
     @GetMapping("/")
-    public String main() {
+    public String home() {
         if (rq.isLogin()) {
             return "redirect:/article/list";
         } else
             return "redirect:/user/login";
-
     }
 
 }
